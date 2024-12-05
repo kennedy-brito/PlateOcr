@@ -20,20 +20,26 @@ class PlateSegmentator:
       \tplates_position: a list of positions in plates 
       \t\ta position is an array with (x, y, width, height)
     """
-    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
-    plates_position = self.classifier.detectMultiScale(gray_image, 1.1, 5, minSize=(40, 40))
+    plates_position = self.classifier.detectMultiScale(img, 1.1, 5, minSize=(40, 40))
 
     
     return plates_position
   
   def segment_img(self, img, plates_position):
 
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     imgs = []
 
     for (x, y, width, height) in plates_position:
-      segmented_img = gray_img[y:y+height, x:x+width]
+      segmented_img = img[y:y+height, x:x+width]
       imgs.append(segmented_img)
     
     return imgs
+  
+  def run(self, img):
+    """
+    Segments the image plates
+    """
+    bounding_boxes = self.detect_bounding_box(img) 
+
+    return self.segment_img(img, bounding_boxes)

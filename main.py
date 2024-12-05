@@ -1,25 +1,11 @@
-from segmentator import *
-import matplotlib.pyplot as plt
 import cv2
+from ocr import EasyOcr
+from segmentator import *
 import numpy as np
-img_path =  "image.png"
-
-segmentator = PlateSegmentator()
-
-img = cv2.imread(img_path)
+imgs_path =  ['MSF6757.jpg','KVF9175.jpg' , 'FLT6A14.jpg', 'image.png','AUQ2A27.jpg']
+app = EasyOcr()
 
 
-bounding_boxes = segmentator.detect_bounding_box(img)
-
-segmented_imgs = segmentator.segment_img(img, bounding_boxes)
-
-for i in segmented_imgs:
-  
-  i = cv2.inRange(i, np.array([0]), np.array([100]))
-  while True:
-    cv2.imshow(
-      "image ",
-      i)
-    
-    if cv2.waitKey(1) & 0xFF == ord("q"): #quit after pressing the key 'q'
-      break
+for img_path in imgs_path:
+  img = cv2.imread(img_path)
+  app.run(img)
