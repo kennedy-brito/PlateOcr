@@ -33,7 +33,8 @@ class PlateSegmentator:
     for (x, y, width, height) in plates_position:
       segmented_img = img[y:y+height, x:x+width]
       imgs.append(segmented_img)
-    
+    cv2.imshow("plate", imgs[0])
+    cv2.waitKey(0)
     return imgs
   
   def run(self, img):

@@ -25,9 +25,12 @@ class EasyOcr:
     and passing a Gaussian filter 
     """
     image = cv2.bilateralFilter(image, d=3, sigmaColor=20, sigmaSpace=15)
+    cv2.imshow("bilateral filter", image)
+    cv2.waitKey(0)
 
     image = cv2.inRange(image, np.array([0]), np.array([125]))   # Combine results
-
+    cv2.imshow("limiarizing", image)
+    cv2.waitKey(0)
     return image
   
   def recognize_plates(self, plates):
@@ -35,7 +38,7 @@ class EasyOcr:
 
 
     for plate in plates:
-      processed = self.pre_processor(plate)
+      processed = plate
 
       ocr = self.reader.readtext(processed, detail=1)
 
